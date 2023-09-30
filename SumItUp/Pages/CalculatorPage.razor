@@ -10,10 +10,13 @@
             <button @onclick="() => AppendNumber(number)">@number</button>
         }
         <button @onclick="() => AppendNumber(0)">0</button>
-        <button @onclick="() => SetOperation(Calculator.Add)">+</button>
-        <button @onclick="() => SetOperation(Calculator.Subtract)">-</button>
-        <button @onclick="() => SetOperation(Calculator.Multiply)">*</button>
-        <button @onclick="() => SetOperation(Calculator.Divide)">/</button>
+        <button @onclick="() => SetBinaryOperation(Calculator.Add)">+</button>
+        <button @onclick="() => SetBinaryOperation(Calculator.Subtract)">-</button>
+        <button @onclick="() => SetBinaryOperation(Calculator.Multiply)">*</button>
+        <button @onclick="() => SetBinaryOperation(Calculator.Divide)">/</button>
+        <button @onclick="() => SetUnaryOperation(Calculator.SquareRoot)">√</button>
+        <button @onclick="() => SetUnaryOperation(Calculator.CubeRoot)">∛</button>
+        <button @onclick="() => SetBinaryOperation(Calculator.Power)">^</button>
         <button @onclick="Calculate">=</button>
         <button @onclick="Clear">C</button>
     </div>
@@ -23,32 +26,49 @@
     private string display = "";
     private double firstOperand;
     private double secondOperand;
-    private Func<double, double, double> operation;
+    private Func<double, double, double> binaryOperation;
+    private Func<double, double> unaryOperation;
 
     private void AppendNumber(int number)
     {
         display += number.ToString();
     }
 
-    private void SetOperation(Func<double, double, double> op)
+    private void SetBinaryOperation(Func<double, double, double> op)
     {
         firstOperand = double.Parse(display);
         display = "";
-        operation = op;
+        binaryOperation = op;
+    }
+
+    private void SetUnaryOperation(Func<double, double> op)
+    {   
+        unaryOperation = op;
+        CalculateUnary();
     }
 
     private void Calculate()
     {
         secondOperand = double.Parse(display);
-        display = operation(firstOperand, secondOperand).ToString();
+        display = binaryOperation(firstOperand, secondOperand).ToString();
     }
+
+    private void CalculateUnary()
+    {
+        if (unaryOperation != null)
+        {
+            firstOperand = double.Parse(display);
+            display = unaryOperation(firstOperand).ToString();
+        }
+    }    
 
     private void Clear()
     {
         display = "";
         firstOperand = 0;
         secondOperand = 0;
-        operation = null;
+        binaryOperation = null;
+        unaryOperation = null;
     }
 }
 

@@ -1,0 +1,54 @@
+﻿@page "/calculator"
+@inject SumItUp.Data.Calculator Calculator
+
+<div>
+    <input type="text" readonly @bind="display" />
+    <div>
+        @for (var i = 1; i <= 9; i++)
+        {
+            var number = i;
+            <button @onclick="() => AppendNumber(number)">@number</button>
+        }
+        <button @onclick="() => AppendNumber(0)">0</button>
+        <button @onclick="() => SetOperation(Calculator.Add)">+</button>
+        <button @onclick="() => SetOperation(Calculator.Subtract)">-</button>
+        <button @onclick="() => SetOperation(Calculator.Multiply)">*</button>
+        <button @onclick="() => SetOperation(Calculator.Divide)">/</button>
+        <button @onclick="Calculate">=</button>
+        <button @onclick="Clear">C</button>
+    </div>
+</div>
+
+@code {
+    private string display = "";
+    private double firstOperand;
+    private double secondOperand;
+    private Func<double, double, double> operation;
+
+    private void AppendNumber(int number)
+    {
+        display += number.ToString();
+    }
+
+    private void SetOperation(Func<double, double, double> op)
+    {
+        firstOperand = double.Parse(display);
+        display = "";
+        operation = op;
+    }
+
+    private void Calculate()
+    {
+        secondOperand = double.Parse(display);
+        display = operation(firstOperand, secondOperand).ToString();
+    }
+
+    private void Clear()
+    {
+        display = "";
+        firstOperand = 0;
+        secondOperand = 0;
+        operation = null;
+    }
+}
+

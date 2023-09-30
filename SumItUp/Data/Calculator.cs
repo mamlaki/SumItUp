@@ -65,6 +65,27 @@ namespace SumItUp.Data
 			throw new ArgumentException("Natural log requires a positive argument");
 		}
 
+		public double Sine(double a)
+		{
+			return Math.Sin(a);
+		}
+
+		public double Cosine(double a)
+		{
+			return Math.Cos(a);
+		}
+
+		public double Tangent(double a)
+		{
+			const double TOLERANCE = 1e-10;
+
+			if (Math.Abs(Math.Cos(a)) < TOLERANCE)
+			{
+				throw new InvalidOperationException("Undefined tangent.");
+			}
+			return Math.Tan(a);
+		}
+
 		public class Matrix
 		{
 			public double[,] Value { get; set; }

@@ -21,6 +21,10 @@
         <button @onclick="() => SetUnaryOperation(Calculator.Exponential)">e^x</button>
         <button @onclick="() => SetUnaryOperation(Calculator.Logarithm)">log</button>
         <button @onclick="() => SetUnaryOperation(Calculator.NaturalLogarithm)">ln</button>
+        <button @onclick="() => SetUnaryOperation(Calculator.Sine)">sin</button>
+        <button @onclick="() => SetUnaryOperation(Calculator.Cosine)">cos</button>
+        <button @onclick="() => SetUnaryOperation(Calculator.Tangent)">tan</button>
+        <button @onclick="InsertPi">π</button>
         <button @onclick="Calculate">=</button>
         <button @onclick="Clear">C</button>
     </div>
@@ -69,10 +73,24 @@
         CalculateUnary();
     }
 
+    private void InsertPi()
+    {
+        display += Math.PI.ToString();
+    }
+
+    private double RoundToZeroIfClose(double value)
+    {
+        const double tolerance = 1e-10;
+        return Math.Abs(value) < tolerance ? 0.0 : value;
+    }
+
     private void Calculate()
     {
         secondOperand = double.Parse(display);
-        display = binaryOperation(firstOperand, secondOperand).ToString();
+
+        var result = binaryOperation(firstOperand, secondOperand);
+
+        display = RoundToZeroIfClose(result).ToString();
     }
 
     private void CalculateUnary()
@@ -80,7 +98,10 @@
         if (unaryOperation != null)
         {
             firstOperand = double.Parse(display);
-            display = unaryOperation(firstOperand).ToString();
+
+            var result = unaryOperation(firstOperand);
+
+            display = RoundToZeroIfClose(result).ToString();
         }
     }
 

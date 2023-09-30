@@ -1,0 +1,17 @@
+﻿.calculator-container {
+    width: 200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+
+.button-grid button {
+    width: 48px;
+    height: 48px;
+    font-size: 1.125rem;
+}

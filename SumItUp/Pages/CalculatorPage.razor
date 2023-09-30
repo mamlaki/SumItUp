@@ -1,9 +1,9 @@
 ﻿@page "/calculator"
 @inject SumItUp.Data.Calculator Calculator
 
-<div>
+<div class="calculator-container"> 
     <input type="text" readonly @bind="display" />
-    <div>
+    <div class="button-grid">
         @for (var i = 1; i <= 9; i++)
         {
             var number = i;

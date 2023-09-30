@@ -41,6 +41,29 @@ namespace SumItUp.Data
 		{
 			return Math.Pow(a, b);
 		}
+
+		public double Exponential(double a)
+		{
+			return Math.Exp(a);
+		}
+
+		public double Logarithm(double a)
+		{
+			if (a > 0)
+			{
+				return Math.Log10(a);
+			}
+			throw new ArgumentException("Log base 10 requires a positive argument.");
+		}
+
+		public double NaturalLogarithm(double a)
+		{
+			if (a > 0)
+			{
+				return Math.Log(a);
+			}
+			throw new ArgumentException("Natural log requires a positive argument");
+		}
 	}
 }
 

@@ -17,6 +17,9 @@
         <button @onclick="() => SetUnaryOperation(Calculator.SquareRoot)">√</button>
         <button @onclick="() => SetUnaryOperation(Calculator.CubeRoot)">∛</button>
         <button @onclick="() => SetBinaryOperation(Calculator.Power)">^</button>
+        <button @onclick="() => SetUnaryOperation(Calculator.Exponential)">e^x</button>
+        <button @onclick="() => SetUnaryOperation(Calculator.Logarithm)">log</button>
+        <button @onclick="() => SetUnaryOperation(Calculator.NaturalLogarithm)">ln</button>
         <button @onclick="Calculate">=</button>
         <button @onclick="Clear">C</button>
     </div>

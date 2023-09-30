@@ -11,6 +11,9 @@
             <button @onclick="() => AppendNumber(number)">@number</button>
         }
         <button @onclick="() => AppendNumber(0)">0</button>
+        <button @onclick="() => ToggleSign()">±</button>
+        <button @onclick="() => InsertDecimal()">.</button>
+        <button @onclick="() => InsertInfinity()">∞</button>
         <button @onclick="() => SetBinaryOperation(Calculator.Add)">+</button>
         <button @onclick="() => SetBinaryOperation(Calculator.Subtract)">-</button>
         <button @onclick="() => SetBinaryOperation(Calculator.Multiply)">*</button>
@@ -24,6 +27,9 @@
         <button @onclick="() => SetUnaryOperation(Calculator.Sine)">sin</button>
         <button @onclick="() => SetUnaryOperation(Calculator.Cosine)">cos</button>
         <button @onclick="() => SetUnaryOperation(Calculator.Tangent)">tan</button>
+        <button @onclick="() => SetUnaryOperation(Calculator.ArcSine)">asin</button>
+        <button @onclick="() => SetUnaryOperation(Calculator.ArcCosine)">acos</button>
+        <button @onclick="() => SetUnaryOperation(Calculator.ArcTangent)">atan</button>
         <button @onclick="InsertPi">π</button>
         <button @onclick="Calculate">=</button>
         <button @onclick="Clear">C</button>
@@ -58,6 +64,34 @@
     private void AppendNumber(int number)
     {
         display += number.ToString();
+    }
+
+    private void ToggleSign()
+    {
+        if (!string.IsNullOrEmpty(display))
+        {
+            if (display[0] == '-')
+            {
+                display = display.Substring(1);
+            }
+            else
+            {
+                display = "-" + display;
+            }
+        }
+    }
+
+    private void InsertDecimal()
+    {
+        if (!display.Contains("."))
+        {
+            display += ".";
+        }
+    }
+
+    private void InsertInfinity()
+    {
+        display = double.PositiveInfinity.ToString("G");
     }
 
     private void SetBinaryOperation(Func<double, double, double> op)

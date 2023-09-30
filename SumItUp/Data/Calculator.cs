@@ -86,6 +86,29 @@ namespace SumItUp.Data
 			return Math.Tan(a);
 		}
 
+		public double ArcSine(double a)
+		{
+			if (a < -1 || a > 1)
+			{
+				throw new InvalidOperationException("Invalid input. Input needs to be in the rage of [-1, 1].");
+			}
+			return Math.Asin(a);
+		}
+
+		public double ArcCosine(double a)
+		{
+			if (a< -1 || a > 1)
+			{
+                throw new InvalidOperationException("Invalid input. Input needs to be in the rage of [-1, 1].");
+            }
+			return Math.Acos(a);
+		}
+
+		public double ArcTangent(double a)
+		{
+			return Math.Atan(a);
+		}
+
 		public class Matrix
 		{
 			public double[,] Value { get; set; }

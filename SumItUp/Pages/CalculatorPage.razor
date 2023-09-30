@@ -1,5 +1,6 @@
 ﻿@page "/calculator"
 @inject SumItUp.Data.Calculator Calculator
+@using System.Text
 
 <div class="calculator-container"> 
     <input type="text" readonly @bind="display" />
@@ -23,10 +24,24 @@
         <button @onclick="Calculate">=</button>
         <button @onclick="Clear">C</button>
     </div>
+    <div>
+        <textarea @bind="matrix1Input"></textarea>
+        <textarea @bind="matrix2Input"></textarea>
+        <button @onclick="AddMatrices">Add</button>
+        <button @onclick="SubtractMatrices">Subtract</button>
+        <button @onclick="MultiplyMatrices">Multiply</button>
+        <div>
+            Result:
+            <pre>@matrixResult</pre>
+        </div>
+    </div>
 </div>
 
 @code {
     private string display = "";
+    private string matrix1Input = "";
+    private string matrix2Input = "";
+    private string matrixResult;
     private double firstOperand;
     private double secondOperand;
     private Func<double, double, double> binaryOperation;
@@ -45,7 +60,7 @@
     }
 
     private void SetUnaryOperation(Func<double, double> op)
-    {   
+    {
         unaryOperation = op;
         CalculateUnary();
     }
@@ -63,7 +78,7 @@
             firstOperand = double.Parse(display);
             display = unaryOperation(firstOperand).ToString();
         }
-    }    
+    }
 
     private void Clear()
     {
@@ -72,6 +87,80 @@
         secondOperand = 0;
         binaryOperation = null;
         unaryOperation = null;
+    }
+
+    private void AddMatrices()
+    {
+        var matrix1 = ParseMatrix(matrix1Input);
+        var matrix2 = ParseMatrix(matrix2Input);
+        var resultMatrix = matrix1.Add(matrix2);
+
+        matrixResult = FormatMatrix(resultMatrix);
+    }
+
+    private void SubtractMatrices()
+    {
+        var matrix1 = ParseMatrix(matrix1Input);
+        var matrix2 = ParseMatrix(matrix2Input);
+        var resultMatrix = matrix1.Subtract(matrix2);
+
+        matrixResult = FormatMatrix(resultMatrix);
+    }
+
+    private void MultiplyMatrices()
+    {
+        var matrix1 = ParseMatrix(matrix1Input);
+        var matrix2 = ParseMatrix(matrix2Input);
+        var resultMatrix = matrix1.Multiply(matrix2);
+
+        matrixResult = FormatMatrix(resultMatrix);
+    }
+
+    private string FormatMatrix(SumItUp.Data.Calculator.Matrix matrix)
+    {
+        var rows = matrix.Value.GetLength(0);
+        var cols = matrix.Value.GetLength(1);
+        var result = new StringBuilder();
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                result.Append(matrix.Value[i, j].ToString());
+                if (j < cols - 1)
+                {
+                    result.Append("\t");
+                }
+            }
+            if (i < rows - 1)
+            {
+                result.AppendLine();
+            }
+        }
+
+        return result.ToString();
+    }
+
+    private SumItUp.Data.Calculator.Matrix ParseMatrix(string input)
+    {
+        var lines = input.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+        var numRows = lines.Length;
+        var numCols = lines[0].Split(new[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
+        var values = new double[numRows, numCols];
+
+        for (int i = 0; i < numRows; i++)
+        {
+            var cols = lines[i].Split(new[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int j = 0; j < numCols; j++)
+            {
+                if (!double.TryParse(cols[j], out values[i, j]))
+                {
+                    throw new FormatException($"Invalid number at row {i + 1}, column {j + 1}");
+                }
+            }
+        }
+
+        return new SumItUp.Data.Calculator.Matrix(values);
     }
 }
 

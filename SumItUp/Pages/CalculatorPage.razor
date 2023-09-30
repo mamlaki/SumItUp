@@ -30,6 +30,10 @@
         <button @onclick="AddMatrices">Add</button>
         <button @onclick="SubtractMatrices">Subtract</button>
         <button @onclick="MultiplyMatrices">Multiply</button>
+        <button @onclick="InvertMatrix1">Invert Matrix 1</button>
+        <button @onclick="InvertMatrix2">Invert Matrix 2</button>
+        <button @onclick="CalculateDeterminant1">Determinant of Matrix 1</button>
+        <button @onclick="CalculateDeterminant2">Determinant of Matrix 2</button>
         <div>
             Result:
             <pre>@matrixResult</pre>
@@ -41,7 +45,7 @@
     private string display = "";
     private string matrix1Input = "";
     private string matrix2Input = "";
-    private string matrixResult;
+    private string matrixResult = "";
     private double firstOperand;
     private double secondOperand;
     private Func<double, double, double> binaryOperation;
@@ -116,6 +120,35 @@
         matrixResult = FormatMatrix(resultMatrix);
     }
 
+    private void InvertMatrix1()
+    {
+        var matrix1 = ParseMatrix(matrix1Input);
+        var resultMatrix = matrix1.Invert();
+        matrixResult = FormatMatrix(resultMatrix);
+    }
+
+    private void InvertMatrix2()
+    {
+        var matrix2 = ParseMatrix(matrix2Input);
+        var resultMatrix = matrix2.Invert();
+        matrixResult = FormatMatrix(resultMatrix);
+    }
+
+    private void CalculateDeterminant1()
+    {
+        var matrix1 = ParseMatrix(matrix1Input);
+        var determinant = matrix1.Determinant();
+        matrixResult = determinant.ToString();
+    }
+
+    private void CalculateDeterminant2()
+    {
+        var matrix2 = ParseMatrix(matrix2Input);
+        var determinant = matrix2.Determinant();
+        Console.WriteLine($"Determinant2: {determinant}");
+        matrixResult = determinant.ToString();
+    }
+
     private string FormatMatrix(SumItUp.Data.Calculator.Matrix matrix)
     {
         var rows = matrix.Value.GetLength(0);
@@ -126,7 +159,7 @@
         {
             for (int j = 0; j < cols; j++)
             {
-                result.Append(matrix.Value[i, j].ToString());
+                result.Append(Math.Round(matrix.Value[i, j], 1).ToString());
                 if (j < cols - 1)
                 {
                     result.Append("\t");
@@ -146,6 +179,7 @@
         var lines = input.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
         var numRows = lines.Length;
         var numCols = lines[0].Split(new[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
+        Console.WriteLine($"ParseMatrix - Rows: {numRows}, Cols: {numCols}");
         var values = new double[numRows, numCols];
 
         for (int i = 0; i < numRows; i++)

@@ -129,6 +129,105 @@ namespace SumItUp.Data
 				}
 				return new Matrix(result);
 			}
+
+			public Matrix Invert()
+			{
+				int n = Value.GetLength(0);
+				double[,] a = (double[,])Value.Clone();
+				double[,] result = new double[n, n];
+
+				for (int i = 0; i < n; ++i)
+				{
+					result[i, i] = 1;
+				}
+
+				for (int i = 0; i < n; ++i)
+				{
+					double diag = a[i, i];
+
+					if (Math.Abs(diag) < 1e-10)
+					{
+						throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+					}
+
+					for (int j = 0; j < n; ++j)
+					{
+						a[i, j] /= diag;
+						result[i, j] /= diag;
+					}
+
+					for (int k = 0; k < n; ++k)
+					{
+						if (k != i)
+						{
+							double factor = a[k, i];
+
+							for (int j = 0; j < n; ++j)
+							{
+								a[k, j] -= factor * a[i, j];
+								result[k, j] -= factor * result[i, j];
+							}
+						}
+					}
+				}
+
+				return new Matrix(result);
+			}
+
+			public double Determinant()
+			{
+				int n = Value.GetLength(0);
+
+				if (n == 2)
+				{
+					double determinant = (Value[0, 0] * Value[1, 1]) - (Value[0, 1] * Value[1, 0]);
+					Console.WriteLine($"2x2 determinant: {determinant}");
+					return determinant;
+				}
+
+				double[,] a = (double[,])Value.Clone();
+				double det = 1;
+
+				for (int i = 0; i < n; ++i)
+				{
+					double max = 0;
+					int maxRow = 0;
+
+					for (int k = i; k < n; ++k)
+					{
+						if (Math.Abs(a[k, i]) > max)
+						{
+							max = Math.Abs(a[k, i]);
+							maxRow = k;
+						}
+					}
+
+					if (maxRow != i)
+					{
+						for (int k = 0; k < n; ++k)
+						{
+							double temp = a[i, k];
+							a[i, k] = a[maxRow, k];
+							a[maxRow, k] = temp;
+						}
+						det *= -1;
+					}
+
+                    det *= a[i, i];
+
+                    for (int j = i + 1; j < n; ++j)
+					{
+						double c = a[j, i] / a[i, i];
+						for (int k = 0; k < n; ++k)
+						{
+							a[j, k] -= c * a[i, k];
+						}
+					}
+					
+				}
+
+                return det;
+            }
 		}
 	}
 }

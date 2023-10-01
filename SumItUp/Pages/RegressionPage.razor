@@ -1,0 +1,60 @@
+﻿@page "/regression"
+@inject SumItUp.Data.Regression Regression
+
+<div class="regression-operations">
+    <span class="error">@errorMessage</span>
+    <textarea placeholder="Enter x-values separated by commas" @bind="xValuesInput"></textarea>
+    <textarea placeholder="Enter y-values separated by commas" @bind="yValuesInput"></textarea>
+    <button @onclick="CalculateRegression">Calculate Regression</button>
+    <div>
+        Linear Regression Equation: y = @slope x + @intercept
+    </div>
+</div>
+
+@code {
+    private string numbersInput = "";
+    private string xValuesInput = "";
+    private string yValuesInput = "";
+    private string errorMessage = "";
+    private double slope;
+    private double intercept;
+
+    private void CalculateRegression()
+    {
+        var xValues = ParseNumbersInput(xValuesInput);
+        var yValues = ParseNumbersInput(yValuesInput);
+
+        if (xValues != null && yValues != null && xValues.Length == yValues.Length)
+        {
+            slope = SumItUp.Data.Regression.CalculateSlope(xValues, yValues);
+            intercept = SumItUp.Data.Regression.CalculateIntercept(xValues, yValues, slope);
+            errorMessage = "";
+        }
+        else
+        {
+            errorMessage = "Error: Invalid input or mismatched array lengths.";
+        }
+    }
+
+    private double[] ParseNumbersInput()
+    {
+        return ParseNumbersInput(numbersInput);
+    }
+
+    private double[] ParseNumbersInput(string input)
+    {
+        var numberStrings = input.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        var numbers = new double[numberStrings.Length];
+
+        for (int i = 0; i < numberStrings.Length; i++)
+        {
+            if (!double.TryParse(numberStrings[i], out numbers[i]))
+            {
+                return null;
+            }
+        }
+
+        return numbers;
+    }
+}
+

@@ -109,6 +109,64 @@ namespace SumItUp.Data
 			return Math.Atan(a);
 		}
 
+		public double Mean(double[] numbers)
+		{
+			if (numbers.Length == 0)
+			{
+				throw new ArgumentException("Array can't be empty.");
+			}
+
+			double sum = 0;
+			foreach (var number in numbers)
+			{
+				sum += number;
+			}
+
+			return sum / numbers.Length;
+		}
+
+		public double Median(double[] numbers)
+		{
+			if (numbers.Length == 0)
+			{
+				throw new ArgumentException("Array can't be empty.");
+			}
+
+			Array.Sort(numbers);
+
+			int mid = numbers.Length / 2;
+
+			return (numbers.Length % 2 != 0) ? numbers[mid] : ((numbers[mid - 1] + numbers[mid]) / 2.0);
+		}
+
+		public double[] Mode(double[] numbers)
+		{
+			if (numbers.Length == 0)
+			{
+				throw new ArgumentException("Array can't be empty.");
+			}
+
+			var numberCounts = new Dictionary<double, int>();
+			foreach (var number in numbers)
+			{
+				if (numberCounts.ContainsKey(number))
+				{
+					numberCounts[number]++;
+				}
+				else
+				{
+					numberCounts[number] = 1;
+				}
+			}
+
+			int maxCount = numberCounts.Values.Max();
+
+			return numberCounts
+				.Where(pair => pair.Value == maxCount)
+				.Select(pair => pair.Key)
+				.ToArray();
+		}
+
 		public class Matrix
 		{
 			public double[,] Value { get; set; }

@@ -49,6 +49,21 @@
             <pre>@matrixResult</pre>
         </div>
     </div>
+    <div>
+        <textarea placeholder="Enter numbers separated by commas" @bind="numbersInput"></textarea>
+        <button @onclick="CalculateMean">Calculate Mean</button>
+        <button @onclick="CalculateMedian">CalculateMedian</button>
+        <button @onclick="CalculateMode">Calculate Mode</button>
+        <div>
+            Mean Result: @meanResult
+        </div>
+        <div>
+            Median Result: @medianResult
+        </div>
+        <div>
+            Mode Result: @modeResult
+        </div>
+    </div>
 </div>
 
 @code {
@@ -56,6 +71,10 @@
     private string matrix1Input = "";
     private string matrix2Input = "";
     private string matrixResult = "";
+    private string numbersInput = "";
+    private string meanResult = "";
+    private string medianResult = "";
+    private string modeResult = "";
     private double firstOperand;
     private double secondOperand;
     private Func<double, double, double> binaryOperation;
@@ -251,5 +270,63 @@
 
         return new SumItUp.Data.Calculator.Matrix(values);
     }
-}
 
+    private void CalculateMean()
+    {
+        var numbers = ParseNumbersInput();
+        if (numbers != null)
+        {
+            var mean = Calculator.Mean(numbers);
+            meanResult = mean.ToString();
+        }
+        else
+        {
+            meanResult = "Invalid number input.";
+        }
+    }
+
+    private void CalculateMedian()
+    {
+        var numbers = ParseNumbersInput();
+        if (numbers != null)
+        {
+            var median = Calculator.Median(numbers);
+            medianResult = median.ToString();
+        }
+        else
+        {
+            medianResult = "Invalid number input.";
+        }
+    }
+
+    private void CalculateMode()
+    {
+        var numbers = ParseNumbersInput();
+        if (numbers != null)
+        {
+            var mode = Calculator.Mode(numbers);
+            modeResult = string.Join(", ", mode);
+        }
+        else
+        {
+            modeResult = "Invalid number input.";
+        }
+    }
+
+    private double[] ParseNumbersInput()
+    {
+        var numberStrings = numbersInput.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        var numbers = new double[numberStrings.Length];
+
+        for (int i = 0; i < numberStrings.Length; i++)
+        {
+            if (!double.TryParse(numberStrings[i], out numbers[i]))
+            {
+                meanResult = "Invalid number input.";
+                return null;
+            }
+        }
+
+        return numbers;
+    }
+}

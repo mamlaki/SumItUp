@@ -205,6 +205,29 @@ namespace SumItUp.Data
 			return standardDeviation;
 		}
 
+		public double Factorial(int n)
+		{
+			if (n < 0)
+			{
+				throw new ArgumentException("Input must be positive.");
+			}
+			else if (n == 0 || n == 1)
+			{
+				return 1;
+			}
+			else
+			{
+				double result = n;
+
+				for (int i = n - 1; i > 1; i--)
+				{
+					result *= i;
+				}
+
+				return result;
+			}
+		}
+
 		public class Matrix
 		{
 			public double[,] Value { get; set; }

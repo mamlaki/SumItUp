@@ -31,6 +31,7 @@
         <button @onclick="() => SetUnaryOperation(Calculator.ArcSine)">asin</button>
         <button @onclick="() => SetUnaryOperation(Calculator.ArcCosine)">acos</button>
         <button @onclick="() => SetUnaryOperation(Calculator.ArcTangent)">atan</button>
+        <button @onclick="CalculateFactorial">!</button>
         <button @onclick="InsertPi">π</button>
         <button @onclick="Calculate">=</button>
         <button @onclick="Clear">C</button>
@@ -208,6 +209,22 @@
         else
         {
             errorMessage = "Error: Invalid input or mismatched array lengths.";
+        }
+    }
+
+    private void CalculateFactorial()
+    {
+        int number;
+        bool isParsed = int.TryParse(display, out number);
+
+        if (isParsed && number >= 0)
+        {
+            var result = Calculator.Factorial(number);
+            display = result.ToString();
+        }
+        else
+        {
+            display = "Invalid input";
         }
     }
 

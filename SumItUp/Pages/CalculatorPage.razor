@@ -83,8 +83,8 @@
             Standard Deviation Result: @standardDeviationResult
         </div>
     </div>
-    <div>
-        <span>@errorMessage</span>
+    <div class="regression-operations">
+        <span class="error">@errorMessage</span>
         <textarea placeholder="Enter x-values separated by commas" @bind="xValuesInput"></textarea>
         <textarea placeholder="Enter y-values separated by commas" @bind="yValuesInput"></textarea>
         <button @onclick="CalculateRegression">Calculate Regression</button>

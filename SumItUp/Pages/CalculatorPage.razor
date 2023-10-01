@@ -1,5 +1,6 @@
 ﻿@page "/calculator"
 @inject SumItUp.Data.Calculator Calculator
+@inject SumItUp.Data.Regression Regression
 @using System.Text
 
 <div class="calculator-container"> 
@@ -82,6 +83,15 @@
             Standard Deviation Result: @standardDeviationResult
         </div>
     </div>
+    <div>
+        <span>@errorMessage</span>
+        <textarea placeholder="Enter x-values separated by commas" @bind="xValuesInput"></textarea>
+        <textarea placeholder="Enter y-values separated by commas" @bind="yValuesInput"></textarea>
+        <button @onclick="CalculateRegression">Calculate Regression</button>
+        <div>
+            Linear Regression Equation: y = @slope x + @intercept 
+        </div>
+    </div>
 </div>
 
 @code {
@@ -93,10 +103,15 @@
     private string meanResult = "";
     private string medianResult = "";
     private string modeResult = "";
+    private string xValuesInput = "";
+    private string yValuesInput = "";
+    private string errorMessage = "";
     private string varianceResult;
     private string standardDeviationResult;
     private double firstOperand;
     private double secondOperand;
+    private double slope;
+    private double intercept;
     private bool isSample = true;
     private Func<double, double, double> binaryOperation;
     private Func<double, double> unaryOperation;
@@ -176,6 +191,23 @@
             var result = unaryOperation(firstOperand);
 
             display = RoundToZeroIfClose(result).ToString();
+        }
+    }
+
+    private void CalculateRegression()
+    {
+        var xValues = ParseNumbersInput(xValuesInput);
+        var yValues = ParseNumbersInput(yValuesInput);
+
+        if (xValues != null && yValues != null && xValues.Length == yValues.Length)
+        {
+            slope = SumItUp.Data.Regression.CalculateSlope(xValues, yValues);
+            intercept = SumItUp.Data.Regression.CalculateIntercept(xValues, yValues, slope);
+            errorMessage = "";
+        }
+        else
+        {
+            errorMessage = "Error: Invalid input or mismatched array lengths.";
         }
     }
 
@@ -364,7 +396,12 @@
 
     private double[] ParseNumbersInput()
     {
-        var numberStrings = numbersInput.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        return ParseNumbersInput(numbersInput);
+    }
+
+    private double[] ParseNumbersInput(string input)
+    {
+        var numberStrings = input.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
         var numbers = new double[numberStrings.Length];
 
         for (int i = 0; i < numberStrings.Length; i++)

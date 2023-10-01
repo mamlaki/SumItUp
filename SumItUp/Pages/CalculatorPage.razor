@@ -1,7 +1,5 @@
 ﻿@page "/calculator"
 @inject SumItUp.Data.Calculator Calculator
-@inject SumItUp.Data.Regression Regression
-@using System.Text
 
 <div class="calculator-container"> 
     <input type="text" readonly @bind="display" />
@@ -36,66 +34,13 @@
         <button @onclick="Calculate">=</button>
         <button @onclick="Clear">C</button>
     </div>
-    <div class="statistical-operations">
-        <textarea placeholder="Enter numbers separated by commas" @bind="numbersInput"></textarea>
-        <button @onclick="CalculateMean">Calculate Mean</button>
-        <button @onclick="CalculateMedian">CalculateMedian</button>
-        <button @onclick="CalculateMode">Calculate Mode</button>
-        <div class="sample-population-radio-buttons">
-            <label>
-                <input type="radio" name="samplePopulation" value="Sample" checked="@isSample" @onchange="() => isSample = true" />
-                Sample
-            </label>
-            <label>
-                <input type="radio" name="samplePopulation" value="Population" checked="@( !isSample)" @onchange="() => isSample = false" />
-                Population
-            </label>
-        </div>
-        <button @onclick="CalculateVariance">Calculate Variance</button>
-        <button @onclick="CalculateStandardDeviation">Calculate Standard Deviation</button>
-        <div>
-            Mean Result: @meanResult
-        </div>
-        <div>
-            Median Result: @medianResult
-        </div>
-        <div>
-            Mode Result: @modeResult
-        </div>
-        <div>
-            Variance Result: @varianceResult
-        </div>
-        <div>
-            Standard Deviation Result: @standardDeviationResult
-        </div>
-    </div>
-    <div class="regression-operations">
-        <span class="error">@errorMessage</span>
-        <textarea placeholder="Enter x-values separated by commas" @bind="xValuesInput"></textarea>
-        <textarea placeholder="Enter y-values separated by commas" @bind="yValuesInput"></textarea>
-        <button @onclick="CalculateRegression">Calculate Regression</button>
-        <div>
-            Linear Regression Equation: y = @slope x + @intercept 
-        </div>
-    </div>
 </div>
 
 @code {
     private string display = "";
     private string numbersInput = "";
-    private string meanResult = "";
-    private string medianResult = "";
-    private string modeResult = "";
-    private string xValuesInput = "";
-    private string yValuesInput = "";
-    private string errorMessage = "";
-    private string varianceResult;
-    private string standardDeviationResult;
     private double firstOperand;
     private double secondOperand;
-    private double slope;
-    private double intercept;
-    private bool isSample = true;
     private Func<double, double, double> binaryOperation;
     private Func<double, double> unaryOperation;
 
@@ -177,23 +122,6 @@
         }
     }
 
-    private void CalculateRegression()
-    {
-        var xValues = ParseNumbersInput(xValuesInput);
-        var yValues = ParseNumbersInput(yValuesInput);
-
-        if (xValues != null && yValues != null && xValues.Length == yValues.Length)
-        {
-            slope = SumItUp.Data.Regression.CalculateSlope(xValues, yValues);
-            intercept = SumItUp.Data.Regression.CalculateIntercept(xValues, yValues, slope);
-            errorMessage = "";
-        }
-        else
-        {
-            errorMessage = "Error: Invalid input or mismatched array lengths.";
-        }
-    }
-
     private void CalculateFactorial()
     {
         int number;
@@ -219,76 +147,6 @@
         unaryOperation = null;
     }
 
-    private void CalculateMean()
-    {
-        var numbers = ParseNumbersInput();
-        if (numbers != null)
-        {
-            var mean = Calculator.Mean(numbers);
-            meanResult = mean.ToString();
-        }
-        else
-        {
-            meanResult = "Invalid number input.";
-        }
-    }
-
-    private void CalculateMedian()
-    {
-        var numbers = ParseNumbersInput();
-        if (numbers != null)
-        {
-            var median = Calculator.Median(numbers);
-            medianResult = median.ToString();
-        }
-        else
-        {
-            medianResult = "Invalid number input.";
-        }
-    }
-
-    private void CalculateMode()
-    {
-        var numbers = ParseNumbersInput();
-        if (numbers != null)
-        {
-            var mode = Calculator.Mode(numbers);
-            modeResult = string.Join(", ", mode);
-        }
-        else
-        {
-            modeResult = "Invalid number input.";
-        }
-    }
-
-    private void CalculateVariance()
-    {
-        var numbers = ParseNumbersInput();
-        if (numbers != null)
-        {
-            var variance = Calculator.Variance(numbers, isSample);
-            varianceResult = variance.ToString();
-        }
-        else
-        {
-            varianceResult = "Invalid number input.";
-        }
-    }
-
-    private void CalculateStandardDeviation()
-    {
-        var numbers = ParseNumbersInput();
-        if (numbers != null)
-        {
-            var standardDeviation = Calculator.StandardDeviation(numbers, isSample);
-            standardDeviationResult = standardDeviation.ToString();
-        }
-        else
-        {
-            standardDeviationResult = "Invalid number input.";
-        }
-    }
-
     private double[] ParseNumbersInput()
     {
         return ParseNumbersInput(numbersInput);
@@ -303,7 +161,6 @@
         {
             if (!double.TryParse(numberStrings[i], out numbers[i]))
             {
-                meanResult = "Invalid number input.";
                 return null;
             }
         }

@@ -46,6 +46,10 @@
         <button @onclick="InvertMatrix2">Invert Matrix 2</button>
         <button @onclick="CalculateDeterminant1">Determinant of Matrix 1</button>
         <button @onclick="CalculateDeterminant2">Determinant of Matrix 2</button>
+        <button @onclick="CalculateRank1">Rank of Matrix 1</button>
+        <button @onclick="CalculateRank2">Rank of Matrix 2</button>
+        <button @onclick="CalculateTrace1">Trace of Matrix 1</button>
+        <button @onclick="CalculateTrace2">Trace of Matrix 2</button>
         <div>
             Result:
             <pre>@matrixResult</pre>
@@ -291,6 +295,48 @@
         var determinant = matrix2.Determinant();
         Console.WriteLine($"Determinant2: {determinant}");
         matrixResult = determinant.ToString();
+    }
+
+    private void CalculateRank1()
+    {
+        var matrix1 = ParseMatrix(matrix1Input);
+        var rank = matrix1.Rank();
+        matrixResult = $"Rank of Matrix 1: {rank}";
+    }
+
+    private void CalculateRank2()
+    {
+        var matrix2 = ParseMatrix(matrix2Input);
+        var rank = matrix2.Rank();
+        matrixResult = $"Rank of Matrix 2: {rank}";
+    }
+
+    private void CalculateTrace1()
+    {
+        var matrix1 = ParseMatrix(matrix1Input);
+        try
+        {
+            var trace = matrix1.Trace();
+            matrixResult = $"Trace of Matrix 1: {trace}";
+        }
+        catch (InvalidOperationException ex)
+        {
+            matrixResult = ex.Message;
+        }
+    }
+
+    private void CalculateTrace2()
+    {
+        var matrix2 = ParseMatrix(matrix2Input);
+        try
+        {
+            var trace = matrix2.Trace();
+            matrixResult = $"Trace of Matrix 2: {trace}";
+        }
+        catch (InvalidOperationException ex)
+        {
+            matrixResult = ex.Message;
+        }
     }
 
     private string FormatMatrix(SumItUp.Data.Calculator.Matrix matrix)

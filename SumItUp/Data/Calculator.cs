@@ -391,6 +391,81 @@ namespace SumItUp.Data
 
                 return det;
             }
+
+			public int Rank()
+			{
+				var matrix = (double[,])Value.Clone();
+				int rows = matrix.GetLength(0);
+				int cols = matrix.GetLength(1);
+				int rank = Math.Min(rows, cols);
+
+				for (int r = 0; r < rank; r++)
+				{
+					if (matrix[r, r] != 0)
+					{
+						for (int i = r + 1; i < rows; i++)
+						{
+							double factor = matrix[i, r] / matrix[r, r];
+
+							for (int j = r; j < cols; j++)
+							{
+								matrix[i, j] -= factor * matrix[r, j];
+							}
+						}
+					}
+					else
+					{
+						bool reduce = true;
+
+						for (int i = r + 1; i < rows; i++)
+						{
+							if (matrix[i, r] != 0)
+							{
+								double[] temp = new double[cols];
+
+								for (int j = 0; j < cols; j++)
+								{
+									temp[j] = matrix[r, j];
+									matrix[r, j] = matrix[i, j];
+									matrix[i, j] = temp[j];
+								}
+								reduce = false;
+								break;
+							}
+						}
+						if (reduce)
+						{
+							rank--;
+							for (int i = 0; i < rows; i++)
+							{
+								matrix[i, r] = matrix[i, rank];
+							}
+						}
+						r--;
+					}
+				}
+				return rank;
+			}
+
+			public double Trace()
+			{
+				int rows = Value.GetLength(0);
+				int cols = Value.GetLength(1);
+
+				if (rows != cols)
+				{
+					throw new InvalidOperationException("Trace is defined only for square matrices.");
+				}
+
+				double trace = 0;
+
+				for (int i = 0; i < rows; i++)
+				{
+					trace += Value[i, i];
+				}
+
+				return trace;
+			}
 		}
 	}
 }

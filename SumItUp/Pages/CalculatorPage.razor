@@ -54,6 +54,18 @@
         <button @onclick="CalculateMean">Calculate Mean</button>
         <button @onclick="CalculateMedian">CalculateMedian</button>
         <button @onclick="CalculateMode">Calculate Mode</button>
+        <div class="sample-population-radio-buttons">
+            <label>
+                <input type="radio" name="samplePopulation" value="Sample" checked="@isSample" @onchange="() => isSample = true" />
+                Sample
+            </label>
+            <label>
+                <input type="radio" name="samplePopulation" value="Population" checked="@( !isSample)" @onchange="() => isSample = false" />
+                Population
+            </label>
+        </div>
+        <button @onclick="CalculateVariance">Calculate Variance</button>
+        <button @onclick="CalculateStandardDeviation">Calculate Standard Deviation</button>
         <div>
             Mean Result: @meanResult
         </div>
@@ -62,6 +74,12 @@
         </div>
         <div>
             Mode Result: @modeResult
+        </div>
+        <div>
+            Variance Result: @varianceResult
+        </div>
+        <div>
+            Standard Deviation Result: @standardDeviationResult
         </div>
     </div>
 </div>
@@ -75,8 +93,11 @@
     private string meanResult = "";
     private string medianResult = "";
     private string modeResult = "";
+    private string varianceResult;
+    private string standardDeviationResult;
     private double firstOperand;
     private double secondOperand;
+    private bool isSample = true;
     private Func<double, double, double> binaryOperation;
     private Func<double, double> unaryOperation;
 
@@ -310,6 +331,34 @@
         else
         {
             modeResult = "Invalid number input.";
+        }
+    }
+
+    private void CalculateVariance()
+    {
+        var numbers = ParseNumbersInput();
+        if (numbers != null)
+        {
+            var variance = Calculator.Variance(numbers, isSample);
+            varianceResult = variance.ToString();
+        }
+        else
+        {
+            varianceResult = "Invalid number input.";
+        }
+    }
+
+    private void CalculateStandardDeviation()
+    {
+        var numbers = ParseNumbersInput();
+        if (numbers != null)
+        {
+            var standardDeviation = Calculator.StandardDeviation(numbers, isSample);
+            standardDeviationResult = standardDeviation.ToString();
+        }
+        else
+        {
+            standardDeviationResult = "Invalid number input.";
         }
     }
 

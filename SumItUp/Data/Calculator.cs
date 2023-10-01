@@ -167,6 +167,44 @@ namespace SumItUp.Data
 				.ToArray();
 		}
 
+		public double Variance(double[] numbers, bool isSample = true)
+		{
+			if (numbers.Length == 0)
+			{
+				throw new ArgumentException("Array can't be empty.");
+			}
+
+			double mean = Mean(numbers);
+
+			Console.WriteLine($"Mean: {mean}");
+
+			double varianceSum = 0;
+
+			foreach (double number in numbers)
+			{
+				varianceSum += Math.Pow(number - mean, 2);
+			}
+
+			Console.WriteLine($"Variance Sum: {varianceSum}");
+
+			double variance = isSample ? varianceSum / (numbers.Length - 1) : varianceSum / numbers.Length;
+
+			Console.WriteLine($"Variance: {variance}");
+
+			return variance;
+		}
+
+		public double StandardDeviation(double[] numbers, bool isSample = true)
+		{
+			double variance = Variance(numbers, isSample);
+			Console.WriteLine($"Variance: {variance}");
+
+			double standardDeviation = Math.Sqrt(variance);
+			Console.WriteLine($"Standard Deviation: {standardDeviation}");
+
+			return standardDeviation;
+		}
+
 		public class Matrix
 		{
 			public double[,] Value { get; set; }

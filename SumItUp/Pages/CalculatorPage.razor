@@ -36,25 +36,6 @@
         <button @onclick="Calculate">=</button>
         <button @onclick="Clear">C</button>
     </div>
-    <div class="matrix-operations">
-        <textarea @bind="matrix1Input"></textarea>
-        <textarea @bind="matrix2Input"></textarea>
-        <button @onclick="AddMatrices">Add</button>
-        <button @onclick="SubtractMatrices">Subtract</button>
-        <button @onclick="MultiplyMatrices">Multiply</button>
-        <button @onclick="InvertMatrix1">Invert Matrix 1</button>
-        <button @onclick="InvertMatrix2">Invert Matrix 2</button>
-        <button @onclick="CalculateDeterminant1">Determinant of Matrix 1</button>
-        <button @onclick="CalculateDeterminant2">Determinant of Matrix 2</button>
-        <button @onclick="CalculateRank1">Rank of Matrix 1</button>
-        <button @onclick="CalculateRank2">Rank of Matrix 2</button>
-        <button @onclick="CalculateTrace1">Trace of Matrix 1</button>
-        <button @onclick="CalculateTrace2">Trace of Matrix 2</button>
-        <div>
-            Result:
-            <pre>@matrixResult</pre>
-        </div>
-    </div>
     <div class="statistical-operations">
         <textarea placeholder="Enter numbers separated by commas" @bind="numbersInput"></textarea>
         <button @onclick="CalculateMean">Calculate Mean</button>
@@ -101,9 +82,6 @@
 
 @code {
     private string display = "";
-    private string matrix1Input = "";
-    private string matrix2Input = "";
-    private string matrixResult = "";
     private string numbersInput = "";
     private string meanResult = "";
     private string medianResult = "";
@@ -239,152 +217,6 @@
         secondOperand = 0;
         binaryOperation = null;
         unaryOperation = null;
-    }
-
-    private void AddMatrices()
-    {
-        var matrix1 = ParseMatrix(matrix1Input);
-        var matrix2 = ParseMatrix(matrix2Input);
-        var resultMatrix = matrix1.Add(matrix2);
-
-        matrixResult = FormatMatrix(resultMatrix);
-    }
-
-    private void SubtractMatrices()
-    {
-        var matrix1 = ParseMatrix(matrix1Input);
-        var matrix2 = ParseMatrix(matrix2Input);
-        var resultMatrix = matrix1.Subtract(matrix2);
-
-        matrixResult = FormatMatrix(resultMatrix);
-    }
-
-    private void MultiplyMatrices()
-    {
-        var matrix1 = ParseMatrix(matrix1Input);
-        var matrix2 = ParseMatrix(matrix2Input);
-        var resultMatrix = matrix1.Multiply(matrix2);
-
-        matrixResult = FormatMatrix(resultMatrix);
-    }
-
-    private void InvertMatrix1()
-    {
-        var matrix1 = ParseMatrix(matrix1Input);
-        var resultMatrix = matrix1.Invert();
-        matrixResult = FormatMatrix(resultMatrix);
-    }
-
-    private void InvertMatrix2()
-    {
-        var matrix2 = ParseMatrix(matrix2Input);
-        var resultMatrix = matrix2.Invert();
-        matrixResult = FormatMatrix(resultMatrix);
-    }
-
-    private void CalculateDeterminant1()
-    {
-        var matrix1 = ParseMatrix(matrix1Input);
-        var determinant = matrix1.Determinant();
-        matrixResult = determinant.ToString();
-    }
-
-    private void CalculateDeterminant2()
-    {
-        var matrix2 = ParseMatrix(matrix2Input);
-        var determinant = matrix2.Determinant();
-        Console.WriteLine($"Determinant2: {determinant}");
-        matrixResult = determinant.ToString();
-    }
-
-    private void CalculateRank1()
-    {
-        var matrix1 = ParseMatrix(matrix1Input);
-        var rank = matrix1.Rank();
-        matrixResult = $"Rank of Matrix 1: {rank}";
-    }
-
-    private void CalculateRank2()
-    {
-        var matrix2 = ParseMatrix(matrix2Input);
-        var rank = matrix2.Rank();
-        matrixResult = $"Rank of Matrix 2: {rank}";
-    }
-
-    private void CalculateTrace1()
-    {
-        var matrix1 = ParseMatrix(matrix1Input);
-        try
-        {
-            var trace = matrix1.Trace();
-            matrixResult = $"Trace of Matrix 1: {trace}";
-        }
-        catch (InvalidOperationException ex)
-        {
-            matrixResult = ex.Message;
-        }
-    }
-
-    private void CalculateTrace2()
-    {
-        var matrix2 = ParseMatrix(matrix2Input);
-        try
-        {
-            var trace = matrix2.Trace();
-            matrixResult = $"Trace of Matrix 2: {trace}";
-        }
-        catch (InvalidOperationException ex)
-        {
-            matrixResult = ex.Message;
-        }
-    }
-
-    private string FormatMatrix(SumItUp.Data.Calculator.Matrix matrix)
-    {
-        var rows = matrix.Value.GetLength(0);
-        var cols = matrix.Value.GetLength(1);
-        var result = new StringBuilder();
-
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < cols; j++)
-            {
-                result.Append(Math.Round(matrix.Value[i, j], 1).ToString());
-                if (j < cols - 1)
-                {
-                    result.Append("\t");
-                }
-            }
-            if (i < rows - 1)
-            {
-                result.AppendLine();
-            }
-        }
-
-        return result.ToString();
-    }
-
-    private SumItUp.Data.Calculator.Matrix ParseMatrix(string input)
-    {
-        var lines = input.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-        var numRows = lines.Length;
-        var numCols = lines[0].Split(new[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
-        Console.WriteLine($"ParseMatrix - Rows: {numRows}, Cols: {numCols}");
-        var values = new double[numRows, numCols];
-
-        for (int i = 0; i < numRows; i++)
-        {
-            var cols = lines[i].Split(new[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            for (int j = 0; j < numCols; j++)
-            {
-                if (!double.TryParse(cols[j], out values[i, j]))
-                {
-                    throw new FormatException($"Invalid number at row {i + 1}, column {j + 1}");
-                }
-            }
-        }
-
-        return new SumItUp.Data.Calculator.Matrix(values);
     }
 
     private void CalculateMean()

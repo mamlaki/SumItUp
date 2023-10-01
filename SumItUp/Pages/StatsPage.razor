@@ -1,0 +1,139 @@
+﻿@page "/stats"
+@inject SumItUp.Data.Calculator Calculator
+
+<div class="statistical-operations">
+    <textarea placeholder="Enter numbers separated by commas" @bind="numbersInput"></textarea>
+    <button @onclick="CalculateMean">Calculate Mean</button>
+    <button @onclick="CalculateMedian">CalculateMedian</button>
+    <button @onclick="CalculateMode">Calculate Mode</button>
+    <div class="sample-population-radio-buttons">
+        <label>
+            <input type="radio" name="samplePopulation" value="Sample" checked="@isSample" @onchange="() => isSample = true" />
+            Sample
+        </label>
+        <label>
+            <input type="radio" name="samplePopulation" value="Population" checked="@( !isSample)" @onchange="() => isSample = false" />
+            Population
+        </label>
+    </div>
+    <button @onclick="CalculateVariance">Calculate Variance</button>
+    <button @onclick="CalculateStandardDeviation">Calculate Standard Deviation</button>
+    <div>
+        Mean Result: @meanResult
+    </div>
+    <div>
+        Median Result: @medianResult
+    </div>
+    <div>
+        Mode Result: @modeResult
+    </div>
+    <div>
+        Variance Result: @varianceResult
+    </div>
+    <div>
+        Standard Deviation Result: @standardDeviationResult
+    </div>
+</div>
+
+@code {
+    private string numbersInput = "";
+    private string meanResult = "";
+    private string medianResult = "";
+    private string modeResult = "";
+    private string varianceResult;
+    private string standardDeviationResult;
+    private bool isSample = true;
+
+    private void CalculateMean()
+    {
+        var numbers = ParseNumbersInput();
+        if (numbers != null)
+        {
+            var mean = Calculator.Mean(numbers);
+            meanResult = mean.ToString();
+        }
+        else
+        {
+            meanResult = "Invalid number input.";
+        }
+    }
+
+    private void CalculateMedian()
+    {
+        var numbers = ParseNumbersInput();
+        if (numbers != null)
+        {
+            var median = Calculator.Median(numbers);
+            medianResult = median.ToString();
+        }
+        else
+        {
+            medianResult = "Invalid number input.";
+        }
+    }
+
+    private void CalculateMode()
+    {
+        var numbers = ParseNumbersInput();
+        if (numbers != null)
+        {
+            var mode = Calculator.Mode(numbers);
+            modeResult = string.Join(", ", mode);
+        }
+        else
+        {
+            modeResult = "Invalid number input.";
+        }
+    }
+
+    private void CalculateVariance()
+    {
+        var numbers = ParseNumbersInput();
+        if (numbers != null)
+        {
+            var variance = Calculator.Variance(numbers, isSample);
+            varianceResult = variance.ToString();
+        }
+        else
+        {
+            varianceResult = "Invalid number input.";
+        }
+    }
+
+    private void CalculateStandardDeviation()
+    {
+        var numbers = ParseNumbersInput();
+        if (numbers != null)
+        {
+            var standardDeviation = Calculator.StandardDeviation(numbers, isSample);
+            standardDeviationResult = standardDeviation.ToString();
+        }
+        else
+        {
+            standardDeviationResult = "Invalid number input.";
+        }
+    }
+
+    private double[] ParseNumbersInput()
+    {
+        return ParseNumbersInput(numbersInput);
+    }
+
+    private double[] ParseNumbersInput(string input)
+    {
+        var numberStrings = input.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        var numbers = new double[numberStrings.Length];
+
+        for (int i = 0; i < numberStrings.Length; i++)
+        {
+            if (!double.TryParse(numberStrings[i], out numbers[i]))
+            {
+                meanResult = "Invalid number input.";
+                return null;
+            }
+        }
+
+        return numbers;
+    }
+}
+

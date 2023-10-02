@@ -140,66 +140,6 @@
     display: block;
 }
 
-/*.btn-pastel1,
-.btn-pastel2,
-.btn-pastel3,
-.btn-pastel4,
-.btn-pastel5 {
-    border: 2px solid transparent;
-    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-.bg-pastel {
-    background-color: #E0F7FA;
-}
-
-.btn-pastel1 {
-    background-color: #FFCDD2;
-}
-
-.btn-pastel1:hover {
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-    transform: translateY(1px);
-}
-
-.btn-pastel2 {
-    background-color: #C5CAE9;
-}
-
-.btn-pastel2:hover {
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-    transform: translateY(1px);
-}
-
-.btn-pastel3 {
-    background-color: #C8E6C9;
-}
-
-.btn-pastel3:hover {
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-    transform: translateY(1px);
-}
-
-.btn-pastel4 {
-    background-color: #FFECB3;
-}
-
-.btn-pastel4:hover {
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-    transform: translateY(1px);
-}
-
-.btn-pastel5 {
-    background-color: #B3E5FC;
-}
-
-.btn-pastel5:hover {
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-    transform: translateY(1px);
-}*/
-
-
 body {
     background: linear-gradient(135deg, #1A1A1A 0%, #333333 100%);
 }
@@ -228,28 +168,38 @@ body {
 }
 
 .btn-dark,
-.btn-function {
+.btn-function,
+.btn-alt {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s;
+    color: #FFF;
 }
 
 .btn-dark:hover,
-.btn-function:hover {
+.btn-function:hover,
+.btn-alt:hover {
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
 
 .btn-dark:active,
-.btn-function:active {
+.btn-function:active,
+.btn-alt:active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transform: translateY(1px);
 }
 
 .btn-dark {
     background-color: #595959;
-    color: #FFF;
-    border-radius: 8px;
+}
+
+.btn-alt {
+    background-color: #A9A9A9;
+}
+
+.btn-alt:hover {
+    background-color: #808080;
 }
 
 .btn-dark:hover {
@@ -258,5 +208,18 @@ body {
 
 .btn-function {
     background: linear-gradient(135deg, #FFA07A 0%, #FF6347 100%); 
-    color: #FFF;
+}
+
+.dropdown-item:hover {
+    cursor: pointer;
+}
+
+.complex-calculator-section {
+    transition: max-height 0.5s ease-in-out;
+    overflow: hidden;
+    max-height: 0;
+}
+
+.complex-calculator-section.show {
+    max-height: 500px;
 }

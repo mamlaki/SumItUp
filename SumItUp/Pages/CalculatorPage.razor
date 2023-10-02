@@ -2,6 +2,15 @@
 @inject SumItUp.Data.Calculator Calculator
 
 <div class="container">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select Calculator Mode
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" @onclick="@(() => SetCalculatorMode("Standard"))">Standard</a>
+            <a class="dropdown-item" @onclick="@(() => SetCalculatorMode("Complex"))">Complex</a>
+        </div>
+    </div>
     <div class="row justify-content-center mt-5">
         <div class="col-md-4">
             <div class="calculator bg-dark p-4 rounded-3">
@@ -42,21 +51,34 @@
                     <div class="col-3"><button class="btn btn-function w-100" @onclick="Calculate">=</button></div>
                     <div class="col-3"></div>
                 </div>
-                @*<button @onclick="() => SetUnaryOperation(Calculator.SquareRoot)">√</button>
-                <button @onclick="() => SetUnaryOperation(Calculator.CubeRoot)">∛</button>
-                <button @onclick="() => SetBinaryOperation(Calculator.Power)">^</button>
-                <button @onclick="() => SetUnaryOperation(Calculator.Exponential)">e^x</button>
-                <button @onclick="() => SetUnaryOperation(Calculator.Logarithm)">log</button>
-                <button @onclick="() => SetUnaryOperation(Calculator.NaturalLogarithm)">ln</button>
-                <button @onclick="() => SetUnaryOperation(Calculator.Sine)">sin</button>
-                <button @onclick="() => SetUnaryOperation(Calculator.Cosine)">cos</button>
-                <button @onclick="() => SetUnaryOperation(Calculator.Tangent)">tan</button>
-                <button @onclick="() => SetUnaryOperation(Calculator.ArcSine)">asin</button>
-                <button @onclick="() => SetUnaryOperation(Calculator.ArcCosine)">acos</button>
-                <button @onclick="() => SetUnaryOperation(Calculator.ArcTangent)">atan</button>
-                <button @onclick="CalculateFactorial">!</button>
-                <button @onclick="InsertPi">π</button>
-                <button @onclick="() => InsertInfinity()">∞</button>*@
+
+                @* Complex Mode Buttons *@
+                <div class="complex-calculator-section @(CalculatorMode == "Complex" ? "show" : "")">
+                    <div class="row mb-3">
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => SetUnaryOperation(Calculator.SquareRoot)">√</button></div>
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => SetUnaryOperation(Calculator.CubeRoot)">∛</button></div>
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => SetBinaryOperation(Calculator.Power)">^</button></div>
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => SetUnaryOperation(Calculator.Exponential)">e^x</button></div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => SetUnaryOperation(Calculator.Logarithm)">log</button></div>
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => SetUnaryOperation(Calculator.NaturalLogarithm)">ln</button></div>
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => SetUnaryOperation(Calculator.Sine)">sin</button></div>
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => SetUnaryOperation(Calculator.Cosine)">cos</button></div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => SetUnaryOperation(Calculator.Tangent)">tan</button></div>
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => SetUnaryOperation(Calculator.ArcSine)">asin</button></div>
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => SetUnaryOperation(Calculator.ArcCosine)">acos</button></div>
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => SetUnaryOperation(Calculator.ArcTangent)">atan</button></div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="CalculateFactorial">!</button></div>
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="InsertPi">π</button></div>
+                        <div class="col-3"><button class="btn btn-alt w-100" @onclick="() => InsertInfinity()">∞</button></div>
+                        <div class="col-3"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -65,6 +87,7 @@
 @code {
     private string display = "";
     private string numbersInput = "";
+    private string CalculatorMode { get; set; } = "Standard";
     private double firstOperand;
     private double secondOperand;
     private Func<double, double, double> binaryOperation;
@@ -192,5 +215,10 @@
         }
 
         return numbers;
+    }
+
+    private void SetCalculatorMode(string mode)
+    {
+        CalculatorMode = mode;
     }
 }

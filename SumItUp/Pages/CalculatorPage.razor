@@ -1,8 +1,80 @@
 ﻿@page "/calculator"
 @inject SumItUp.Data.Calculator Calculator
 
-<div class="calculator-container"> 
-    <input type="text" readonly @bind="display" />
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-4">
+            <div class="bg-pastel p-4 rounded-3">
+                <input type="text" class="form-control calculator-display mb-3 p-2 text-end" readonly @bind="display" />
+                <div class="row mb-3">
+                    <div class="col-3"><button class="btn btn-pastel1 w-100" @onclick="Clear">AC</button></div>
+                    <div class="col-3"><button class="btn btn-pastel2 w-100" @onclick="() => ToggleSign()">±</button></div>
+                    <div class="col-3"><button class="btn btn-pastel3 w-100" @onclick="() => InsertDecimal()">.</button></div>
+                    <div class="col-3"><button class="btn btn-pastel4 w-100" @onclick="CalculateFactorial">!</button></div>
+                </div>
+                <div class="row mb-3">
+                    @for (int i = 7; i <= 9; i++)
+                    {
+                        int number = i;
+                        <div class="col-4"><button class="btn btn-pastel5 w-100" @onclick="() => AppendNumber(number)">@number</button></div>
+                    }
+                </div>
+                <div class="row mb-3">
+                    @for (int i = 4; i <= 6; i++)
+                    {
+                        int number = i;
+                        <div class="col-4"><button class="btn btn-pastel5 w-100" @onclick="() => AppendNumber(number)">@number</button></div>
+                    }
+                </div>
+                <div class="row mb-3">
+                    @for (int i = 1; i <= 3; i++)
+                    {
+                        int number = i;
+                        <div class="col-4"><button class="btn btn-pastel5 w-100" @onclick="() => AppendNumber(number)">@number</button></div>
+                    }
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4"><button class="btn btn-pastel1 w-100" @onclick="() => AppendNumber(0)">0</button></div>
+                    <div class="col-4"><button class="btn btn-pastel2 w-100" @onclick="() => SetBinaryOperation(Calculator.Add)">+</button></div>
+                    <div class="col-4"><button class="btn btn-pastel3 w-100" @onclick="() => SetBinaryOperation(Calculator.Subtract)">-</button></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4"><button class="btn btn-pastel1 w-100" @onclick="() => SetBinaryOperation(Calculator.Multiply)">X</button></div>
+                    <div class="col-4"><button class="btn btn-pastel2 w-100" @onclick="() => SetBinaryOperation(Calculator.Divide)">÷</button></div>
+                    <div class="col-4"><button class="btn btn-pastel3 w-100" @onclick="Calculate">=</button></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4"><button class="btn btn-pastel1 w-100" @onclick="() => SetUnaryOperation(Calculator.SquareRoot)">√</button></div>
+                    <div class="col-4"><button class="btn btn-pastel2 w-100" @onclick="() => SetUnaryOperation(Calculator.CubeRoot)">∛</button></div>
+                    <div class="col-4"><button class="btn btn-pastel3 w-100" @onclick="() => SetBinaryOperation(Calculator.Power)">^</button></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4"><button class="btn btn-pastel1 w-100" @onclick="() => SetUnaryOperation(Calculator.Exponential)">e^x</button></div>
+                    <div class="col-4"><button class="btn btn-pastel2 w-100" @onclick="() => SetUnaryOperation(Calculator.Logarithm)">log</button></div>
+                    <div class="col-4"><button class="btn btn-pastel3 w-100" @onclick="() => SetUnaryOperation(Calculator.NaturalLogarithm)">ln</button></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4"><button class="btn btn-pastel1 w-100" @onclick="() => SetUnaryOperation(Calculator.Sine)">sin</button></div>
+                    <div class="col-4"><button class="btn btn-pastel2 w-100" @onclick="() => SetUnaryOperation(Calculator.Cosine)">cos</button></div>
+                    <div class="col-4"><button class="btn btn-pastel3 w-100" @onclick="() => SetUnaryOperation(Calculator.Tangent)">tan</button></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4"><button class="btn btn-pastel1 w-100" @onclick="() => SetUnaryOperation(Calculator.ArcSine)">asin</button></div>
+                    <div class="col-4"><button class="btn btn-pastel2 w-100" @onclick="() => SetUnaryOperation(Calculator.ArcCosine)">acos</button></div>
+                    <div class="col-4"><button class="btn btn-pastel3 w-100" @onclick="() => SetUnaryOperation(Calculator.ArcTangent)">atan</button></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4"><button class="btn btn-pastel1 w-100" @onclick="InsertPi">π</button></div>
+                    <div class="col-4"><button class="btn btn-pastel2 w-100" @onclick="() => InsertInfinity()">∞</button></div>
+                    <div class="col-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="calculator-container"> 
+    <input type="text" class="form-control mb-3 text-end" readonly @bind="display" />
     <div class="button-grid">
         @for (var i = 1; i <= 9; i++)
         {
@@ -34,7 +106,7 @@
         <button @onclick="Calculate">=</button>
         <button @onclick="Clear">C</button>
     </div>
-</div>
+</div>*@
 
 @code {
     private string display = "";

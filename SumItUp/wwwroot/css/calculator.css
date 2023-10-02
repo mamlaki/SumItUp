@@ -140,7 +140,7 @@
     display: block;
 }
 
-.btn-pastel1,
+/*.btn-pastel1,
 .btn-pastel2,
 .btn-pastel3,
 .btn-pastel4,
@@ -197,15 +197,66 @@
 .btn-pastel5:hover {
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
     transform: translateY(1px);
+}*/
+
+
+body {
+    background: linear-gradient(135deg, #1A1A1A 0%, #333333 100%);
+}
+
+.calculator {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 .calculator-display {
-    background-color: #D3D3D3;
-    border: 2px solid #000;
-    border-radius: 15px;
-    color: #000;
-    font-family: 'Lucida Console', Monaco, monospace;
-    font-size: 1.5rem;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: monospace, sans-serif;
+    font-weight: lighter;
+    font-size: 4rem;
     padding: 10px;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.form-control.calculator-display {
+    background-color: #4D4D4D !important;
+    border: none;
+}
+
+.bg-dark {
+    background: linear-gradient(135deg, #2C2C2C 0%, #1B1B1B 100%);
+}
+
+.btn-dark,
+.btn-function {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.btn-dark:hover,
+.btn-function:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.btn-dark:active,
+.btn-function:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(1px);
+}
+
+.btn-dark {
+    background-color: #595959;
+    color: #FFF;
+    border-radius: 8px;
+}
+
+.btn-dark:hover {
+    background-color: #4D4D4D;
+}
+
+.btn-function {
+    background: linear-gradient(135deg, #FFA07A 0%, #FF6347 100%); 
+    color: #FFF;
 }

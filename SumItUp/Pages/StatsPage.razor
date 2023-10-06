@@ -1,37 +1,40 @@
 ﻿@page "/stats"
 @inject SumItUp.Data.Calculator Calculator
 
-<div class="statistical-operations">
-    <textarea placeholder="Enter numbers separated by commas" @bind="numbersInput"></textarea>
-    <button @onclick="CalculateMean">Calculate Mean</button>
-    <button @onclick="CalculateMedian">CalculateMedian</button>
-    <button @onclick="CalculateMode">Calculate Mode</button>
-    <div class="sample-population-radio-buttons">
-        <label>
-            <input type="radio" name="samplePopulation" value="Sample" checked="@isSample" @onchange="() => isSample = true" />
-            Sample
-        </label>
-        <label>
-            <input type="radio" name="samplePopulation" value="Population" checked="@( !isSample)" @onchange="() => isSample = false" />
-            Population
-        </label>
-    </div>
-    <button @onclick="CalculateVariance">Calculate Variance</button>
-    <button @onclick="CalculateStandardDeviation">Calculate Standard Deviation</button>
-    <div>
-        Mean Result: @meanResult
-    </div>
-    <div>
-        Median Result: @medianResult
-    </div>
-    <div>
-        Mode Result: @modeResult
-    </div>
-    <div>
-        Variance Result: @varianceResult
-    </div>
-    <div>
-        Standard Deviation Result: @standardDeviationResult
+<div class="container">
+    <div class="statistical-operations p-4 row">
+        <div class="col-lg-6">
+            <textarea rows="4" cols="50" class="form-control mb-3" placeholder="Enter numbers separated by commans" @bind="numbersInput"></textarea>
+            <div class="mb-3">
+                <button class="btn btn-info mb-2" @onclick="CalculateMean">Calculate Mean</button>
+                <button class="btn btn-info mb-2" @onclick="CalculateMedian">Calculate Median</button>
+                <button class="btn btn-info mb-2" @onclick="CalculateMode">Calculate Mode</button>
+            </div>
+            <hr />
+            <div class="sample-population-radio-buttons mb-3 text-start">
+                <label class="me-3">
+                    <input type="radio" name="samplePopulation" value="Sample" checked="@isSample" @onchange="() => isSample = true" />
+                    Sample
+                </label>
+                <label>
+                    <input type="radio" name="samplePopulation" value="Population" checked="@( !isSample)" @onchange="() => isSample = false" />
+                    Population
+                </label>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-info mb-2" @onclick="CalculateVariance">Calculate Variance</button>
+                <button class="btn btn-info mb-2" @onclick="CalculateStandardDeviation">Calculate Standard Deviation</button>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="results bg-light p-3 rounded">
+                <div><strong>Mean Result:</strong> @meanResult</div>
+                <div><strong>Median Result:</strong> @medianResult</div>
+                <div><strong>Mode Reuslt:</strong> @modeResult</div>
+                <div><strong>Variance Result:</strong> @varianceResult</div>
+                <div><strong>Standard Deviation Result:</strong> @standardDeviationResult</div>
+            </div>
+        </div>
     </div>
 </div>
 

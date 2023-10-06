@@ -146,6 +146,9 @@ body {
 
 .calculator {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
 }
 
 .calculator-display {
@@ -153,9 +156,10 @@ body {
     color: #FFFFFF;
     font-family: monospace, sans-serif;
     font-weight: lighter;
-    font-size: 4rem;
+    font-size: 2.5rem;
     padding: 10px;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
 }
 
 .form-control.calculator-display {
@@ -174,6 +178,9 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s;
     color: #FFF;
+    font-size: 1.2rem;
+    padding: 10px 15px;
+    margin: 2px;
 }
 
 .btn-dark:hover,
@@ -222,4 +229,36 @@ body {
 
 .complex-calculator-section.show {
     max-height: 500px;
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .calculator {
+        padding: 10px;
+    }
+
+    .calculator-display {
+        font-size: 2.8rem;
+    }
+
+    .btn-dark,
+    .btn-function,
+    .btn-alt {
+        font-size: 1.3rem;
+    }
+}
+
+@media (min-width: 993px) {
+    .calculator {
+        padding: 20px;
+    }
+
+    .calculator-display {
+        font-size: 3rem;
+    }
+
+    .btn-dark,
+    .btn-function,
+    .btn-alt {
+        font-size: 1.4rem;
+    }
 }

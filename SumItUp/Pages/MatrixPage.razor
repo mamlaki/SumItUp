@@ -2,26 +2,59 @@
 @inject SumItUp.Data.Calculator Calculator
 @using System.Text
 
-<div class="matrix-operations">
-    <textarea @bind="matrix1Input"></textarea>
-    <textarea @bind="matrix2Input"></textarea>
-    <button @onclick="AddMatrices">Add</button>
-    <button @onclick="SubtractMatrices">Subtract</button>
-    <button @onclick="MultiplyMatrices">Multiply</button>
-    <button @onclick="InvertMatrix1">Invert Matrix 1</button>
-    <button @onclick="InvertMatrix2">Invert Matrix 2</button>
-    <button @onclick="CalculateDeterminant1">Determinant of Matrix 1</button>
-    <button @onclick="CalculateDeterminant2">Determinant of Matrix 2</button>
-    <button @onclick="CalculateRank1">Rank of Matrix 1</button>
-    <button @onclick="CalculateRank2">Rank of Matrix 2</button>
-    <button @onclick="CalculateTrace1">Trace of Matrix 1</button>
-    <button @onclick="CalculateTrace2">Trace of Matrix 2</button>
-    <div>
-        Result:
-        <pre>@matrixResult</pre>
+<div class="container">
+    <div class="matrix-operations p-5 rounded bg-light shadow">
+        <div class="row mb-3">
+            <div class="col-md-6 mb-3">
+                <textarea class="form-control" @bind="matrix1Input" placeholder="Enter matrix 1 data"></textarea>
+            </div>
+            <div class="col-md-6 mb-3">
+                <textarea class="form-control" @bind="matrix2Input" placeholder="Enter matrix 2 data"></textarea>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-outline-secondary" @onclick="AddMatrices">Add</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-outline-secondary" @onclick="SubtractMatrices">Subtract</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-outline-secondary" @onclick="MultiplyMatrices">Multiply</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-outline-secondary" @onclick="InvertMatrix1">Invert Matrix 1</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-outline-secondary" @onclick="InvertMatrix2">Invert Matrix 2</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-outline-secondary" @onclick="CalculateDeterminant1">Determinant of Matrix 1</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-outline-secondary" @onclick="CalculateDeterminant2">Determinant of Matrix 2</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-outline-secondary" @onclick="CalculateRank1">Rank of Matrix 1</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-outline-secondary" @onclick="CalculateRank2">Rank of Matrix 2</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-outline-secondary" @onclick="CalculateTrace1">Trace of Matrix 1</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="btn btn-outline-secondary" @onclick="CalculateTrace2">Trace of Matrix 2</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <label>Result:</label>
+                <pre class="bg-light p-3 border rounded">@matrixResult</pre>
+            </div>
+        </div>
     </div>
 </div>
-
 
 @code {
     private string matrix1Input = "";

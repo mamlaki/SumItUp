@@ -251,6 +251,10 @@ body.complex-open {
     transform: translateX(-50%);
 }
 
+pre {
+    overflow: auto;
+}
+
 @keyframes pulse {
     0% {
         opacity: 1;
@@ -302,5 +306,10 @@ body.complex-open {
         width: 100%;
         display: block;
         margin: 0 auto 10px auto;
+    }
+
+    .matrix-operations button {
+        width: 100%;
+        display: block;
     }
 }

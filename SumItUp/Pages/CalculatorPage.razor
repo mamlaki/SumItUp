@@ -2,13 +2,31 @@
 @inject SumItUp.Data.Calculator Calculator
 
 <div class="container">
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Select Calculator Mode
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" @onclick="@(() => SetCalculatorMode("Standard"))">Standard</a>
-            <a class="dropdown-item" @onclick="@(() => SetCalculatorMode("Complex"))">Complex</a>
+    <div class="row justify-content-center">
+        <div class="col-auto position-relative">
+            <div class="dropdown">
+                <button class="btn btn-secondary p-3 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Select Calculator Mode
+                </button>
+                <div class="dropdown-menu p-3 position-absolute center-dropdown" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item mb-3 @(CalculatorMode == "Standard" ? "selected" : "")" @onclick="@(() => SetCalculatorMode("Standard"))">
+                        <i class="oi oi-calculator"></i>
+                        Standard
+                        @if (CalculatorMode == "Standard")
+                        {
+                            <i class="oi oi-check"></i>
+                        }
+                    </a>
+                    <a class="dropdown-item @(CalculatorMode == "Complex" ? "selected" : "")" @onclick="@(() => SetCalculatorMode("Complex"))">
+                        <i class="oi oi-beaker"></i>
+                        Complex
+                        @if (CalculatorMode == "Complex")
+                        {
+                            <i class="oi oi-check"></i>
+                        }
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row justify-content-center mt-5">

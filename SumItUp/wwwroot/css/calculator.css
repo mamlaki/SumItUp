@@ -232,6 +232,50 @@ body {
     max-height: 500px;
 }
 
+.dropdown-item {
+    padding: 12px;
+}
+
+.dropdown-item.selected {
+    position: relative;
+    border-radius: 4px;
+    color: white;
+    background: linear-gradient(90deg, #99AABF, #4A8DAB);
+    z-index: 1;
+}
+
+.dropdown-item.selected::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #4A8DAB;
+    z-index: -1;
+    animation: pulse 3s linear infinite alternate;
+    border-radius: 4px;
+}
+
+.center-dropdown {
+    left: 10% !important;
+    transform: translateX(-50%);
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 @media (min-width: 768px) and (max-width: 992px) {
     .calculator {
         padding: 10px;

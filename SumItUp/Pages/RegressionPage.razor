@@ -1,13 +1,19 @@
 ﻿@page "/regression"
 @inject SumItUp.Data.Regression Regression
 
-<div class="regression-operations">
-    <span class="error">@errorMessage</span>
-    <textarea placeholder="Enter x-values separated by commas" @bind="xValuesInput"></textarea>
-    <textarea placeholder="Enter y-values separated by commas" @bind="yValuesInput"></textarea>
-    <button @onclick="CalculateRegression">Calculate Regression</button>
-    <div>
-        Linear Regression Equation: y = @slope x + @intercept
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="regression-operations bg-light p-4 rounded">
+                <div class="text-danger mb-3">@errorMessage</div>
+                <textarea class="form-control mb-2" placeholder="Enter x-values separated by commas" @bind="xValuesInput"></textarea>
+                <textarea class="form-control mb-2" placeholder="Enter y-values separated by commas" @bind="yValuesInput"></textarea>
+                <button class="btn btn-primary mb-3" @onclick="CalculateRegression">Calculate Regression</button>
+                <div class="border-top pt-3">
+                    Linear Regression Equation: y = @slope x + @intercept 
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

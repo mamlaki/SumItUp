@@ -1,5 +1,6 @@
 ﻿@page "/calculator"
 @inject SumItUp.Data.Calculator Calculator
+@inject IJSRuntime JSRuntime
 
 <div class="container">
     <div class="row justify-content-center">
@@ -235,8 +236,21 @@
         return numbers;
     }
 
-    private void SetCalculatorMode(string mode)
+    private async void SetCalculatorMode(string mode)
     {
         CalculatorMode = mode;
+        await ToggleBodyClass(mode);
+    }
+
+    private async Task ToggleBodyClass(string mode)
+    {
+        if (mode == "Complex")
+        {
+            await JSRuntime.InvokeVoidAsync("addClassToBody", "complex-open");
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("removeClassFromBody", "complex-open");
+        }
     }
 }
